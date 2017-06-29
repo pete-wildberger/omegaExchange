@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vendors/angular.min.js" charset="utf-8"></script>
+
+  <script src="scripts/exchangeController.js" charset="utf-8"></script>
+  <!-- <script src="public/scripts/services/exchange.service.js" charset="utf-8"></script> -->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+crossorigin="anonymous">
+  <link rel="stylesheet" href="styles/styles.css">
+
+  <title>Ω Exchange</title>
+</head>
+<body ng-app="myApp">
+  <main ng-controller="ExchangeController as ec">
+
+  <h1>Ω Exchange</h1>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-6 col-sm-3" ng-repeat="x in ec.objectArray">
+        {{x.name}}, {{x.price}}
+        <img class="img-responsive" ng-src="{{x.imageSrc}}" />
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
