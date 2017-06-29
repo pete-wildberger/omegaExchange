@@ -7,6 +7,8 @@ function ExchangeController(){
   // variables
   const vm = this;
   const STARTPRICE = 5;
+  const NAME = 0;
+  const IMGSRC = 1;
   vm.objectArray = [];
 
   class Item {
@@ -39,9 +41,10 @@ function ExchangeController(){
     ['Apple', '/images/012-apple.png']
   ]; // end masterArray
 
-  for (var i = 0; i < masterArray.length; i++) {
-    vm.objectArray.push(new Item (masterArray[i][0], masterArray[i][1]));
+  for (let item of masterArray) {
+    vm.objectArray.push(new Item (item[NAME], item[IMGSRC]));
   } // fill objectArray with Items from masterArray
+  // better one using ES6 'for of loop'
 
   console.log(vm.objectArray);
 } // end exchangeController
