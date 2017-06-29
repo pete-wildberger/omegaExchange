@@ -2,26 +2,29 @@ var app = angular.module('myApp', []);
 
 app.controller('ExchangeController', ExchangeController);
 
-function ExchangeController(){
+function ExchangeController( $interval ){
 
   // variables
   const vm = this;
   const STARTPRICE = 5;
-  const NAME = 0;
-  const IMGSRC = 1;
+  // const NAME = 0;
+  // const IMGSRC = 1;
   vm.objectArray = [];
 
   class Item {
 
     constructor(name, src){
       this.name = name;
-      this.price = STARTPRICE;
+      this.price = STARTPRICE + Number(( ( Math.random() * (100) - 50 ) / 100).toFixed(2));
       this.imageSrc = src;
     } // end constructor
 
     priceChange(){
-      let change = Number(( ( Math.random() * (100) - 50 ) / 100).toFixed(2));
-      this.price += change;
+      $interval( () => {
+        let change = Number(( ( Math.random() * (100) - 50 ) / 100).toFixed(2));
+        this.price += change;
+      }, 15000, 60);
+
     } // end priceChange
 
   } // end item Class
@@ -42,9 +45,15 @@ function ExchangeController(){
   ]; // end masterArray
 
   for (let item of masterArray) {
-    vm.objectArray.push(new Item (item[NAME], item[IMGSRC]));
+    let x = (new Item (...item));
+    x.priceChange();
+    // $interval( x.priceChange(), 15000, 60);
+    vm.objectArray.push(x);
   } // fill objectArray with Items from masterArray
   // better one using ES6 'for of loop'
 
   console.log(vm.objectArray);
+  // forEach(vm.objectArray){
+  //   vm.objectArray.priceChange();
+  // }
 } // end exchangeController

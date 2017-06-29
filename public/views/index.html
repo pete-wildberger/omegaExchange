@@ -23,7 +23,7 @@ crossorigin="anonymous">
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-6 col-sm-3" ng-repeat="x in ec.objectArray">
-        {{x.name}}, {{x.price}}
+        {{x.name}}, {{x.price | currency}}
         <img class="img-responsive" ng-src="{{x.imageSrc}}" />
       </div>
     </div>
