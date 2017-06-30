@@ -29,10 +29,10 @@ crossorigin="anonymous">
         {{x.name}}, {{x.price | currency}}
         <p ng-if="x.inventory == 1">You have: {{x.inventory}} {{x.name}}</p>
         <p ng-if="x.inventory > 1">You have: {{x.inventory}} {{x.name}}s</p>
-        <p ng-if="x.inventory == 0">You have: No {{x.name}}s</p>
-        <p ng-if="x.perishCount">Will go bad in: {{x.perishCount}}</p>
+        <p ng-if="x.inventory == 0">You have none</p>
+        <p ng-if="x.perishCount > -1">Will go bad in: {{x.perishCount}}</p>
         <p>Average Price Paid: {{x.avgPricePaid | currency}}</p>
-        <button class="btn"><img class="img-responsive" ng-src="{{x.imageSrc}}" ng-click="x.buy()"/>
+        <button class="btn btn-block"><img class="img-responsive" ng-src="{{x.imageSrc}}" ng-click="x.buy()"/>
         </button>
         <button class="btn btn-warning btn-block" ng-click="x.sell()">Sell 1 {{x.name}}</button>
         </div>
