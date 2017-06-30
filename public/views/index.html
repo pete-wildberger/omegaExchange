@@ -22,18 +22,22 @@ crossorigin="anonymous">
   <h1>Ω Exchange</h1>
   <h2>You have: {{ec.cash | currency}}</h2>
   <h3>Change of:  {{ec.cash - 100 | currency}}</h3>
+  <h3>{{ec.roundsLeft}} rounds left</h3>
+  <button ng-show="ec.buttonShow" ng-click="ec.startGame()">STARTO</button>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-6 col-sm-3" ng-repeat="x in ec.objectArray">
-        <div class="itemBox">
-        {{x.name}}, {{x.price | currency}}
-        <p ng-if="x.inventory == 1">You have: {{x.inventory}} {{x.name}}</p>
-        <p ng-if="x.inventory > 1">You have: {{x.inventory}} {{x.name}}s</p>
-        <p ng-if="x.inventory == 0">You have none</p>
-        <p ng-if="x.perishCount > -1">Will go bad in: {{x.perishCount}}</p>
-        <p>Average Price Paid: {{x.avgPricePaid | currency}}</p>
-        <button class="btn btn-block"><img class="img-responsive" ng-src="{{x.imageSrc}}" ng-click="x.buy()"/>
+      <div class="col-xs-6 col-sm-3 col-lg-2" ng-repeat="x in ec.objectArray">
+        <div class="itemBox" ng-class="{true:'green', false:''}[x.sellNow]">
+
+        <button class="btn btn-block"><img class="img-responsive" ng-src="{{x.imageSrc}}" ng-click="x.buy()"/><span class="invent">{{x.inventory}}</span>
         </button>
+        <p><strong>{{x.name}}, {{x.price | currency}}</strong>
+          <br>
+        <!-- <p ng-if="x.inventory == 1">You have: {{x.inventory}} {{x.name}}</p>
+        <p ng-if="x.inventory > 1">You have: {{x.inventory}} {{x.name}}s</p>
+        <p ng-if="x.inventory == 0">You have none</p> -->
+        Average Price Paid: {{x.avgPricePaid | currency}}</p>
+        <p ng-if="x.perishCount > -1">Will go bad in: {{x.perishCount}}</p>
         <button class="btn btn-warning btn-block" ng-click="x.sell()">Sell 1 {{x.name}}</button>
         </div>
       </div>

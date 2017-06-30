@@ -7,8 +7,18 @@ function ExchangeController($interval) {
   // variables
   const vm = this;
   const STARTPRICE = 5;
+  const ROUNDTIME = 3000;
+  const ROUNDS = 30;
   vm.cash = 100;
   vm.objectArray = [];
+  vm.roundsLeft = ROUNDS;
+  vm.buttonShow = true;
+
+  function timer() {
+    $interval(() => {
+      vm.roundsLeft--;
+    }, ROUNDTIME, ROUNDS);
+  }
 
   class Item {
 
@@ -31,7 +41,14 @@ function ExchangeController($interval) {
         } else {
           this.price += change;
         }
-      }, 1000, 60); // end $interval
+        if(this.avgPricePaid == 0) {
+          this.sellNow = false;
+        } else if (this.avgPricePaid > this.price) {
+          this.sellNow = false;
+        } else {
+          this.sellNow = true;
+        }
+      }, ROUNDTIME, ROUNDS); // end $interval
     } // end priceChange
 
     getAvg() {
@@ -48,6 +65,7 @@ function ExchangeController($interval) {
         this.pricesPaid.push(this.price);
         this.avgPricePaid = this.getAvg();
         vm.cash -= this.price;
+        console.log(this.sellNow);
       }
     } // end buy method
 
@@ -84,7 +102,14 @@ function ExchangeController($interval) {
         } else {
           this.price += change;
         }
-      }, 1000, 60); // end $interval
+        if(this.avgPricePaid == 0) {
+          this.sellNow = false;
+        } else if (this.avgPricePaid > this.price) {
+          this.sellNow = false;
+        } else {
+          this.sellNow = true;
+        }
+      }, ROUNDTIME, ROUNDS); // end $interval
     } // end priceChange
   }
 
@@ -107,16 +132,24 @@ function ExchangeController($interval) {
     ['Apple', '/images/012-apple.png']
   ]; // end fruitArray
 
-  for (let item of nonFruitArray) {
-    let x = (new Item(...item));
-    x.priceChange();
-    vm.objectArray.push(x);
-  } // fill objectArray with Items from nonFruitArray
-  // better one using ES6 'for of loop'
-  for (let item of fruitArray) {
-    let x = (new Fruit(...item));
-    x.priceChange();
-    vm.objectArray.push(x);
-  } // fill objectArray with Items from fruitArray
+  vm.startGame = () => {
+    vm.objectArray = [];
+    vm.buttonShow = false;
+
+    for (let item of nonFruitArray) {
+      let x = (new Item(...item));
+      x.priceChange();
+      vm.objectArray.push(x);
+    } // fill objectArray with Items from nonFruitArray
+    // better one using ES6 'for of loop'
+    for (let item of fruitArray) {
+      let x = (new Fruit(...item));
+      x.priceChange();
+      vm.objectArray.push(x);
+    } // fill objectArray with Items from fruitArray
+
+    timer();
+  }; // end startGame
+
 
 } // end exchangeController
