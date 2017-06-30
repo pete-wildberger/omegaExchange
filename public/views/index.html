@@ -20,11 +20,22 @@ crossorigin="anonymous">
   <main ng-controller="ExchangeController as ec">
 
   <h1>Ω Exchange</h1>
+  <h2>You have: {{ec.cash | currency}}</h2>
+  <h3>Change of:  {{ec.cash - 100 | currency}}</h3>
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-6 col-sm-3" ng-repeat="x in ec.objectArray">
+        <div class="itemBox">
         {{x.name}}, {{x.price | currency}}
-        <img class="img-responsive" ng-src="{{x.imageSrc}}" />
+        <p ng-if="x.inventory == 1">You have: {{x.inventory}} {{x.name}}</p>
+        <p ng-if="x.inventory > 1">You have: {{x.inventory}} {{x.name}}s</p>
+        <p ng-if="x.inventory == 0">You have: No {{x.name}}s</p>
+        <p ng-if="x.perishCount">Will go bad in: {{x.perishCount}}</p>
+        <p>Average Price Paid: {{x.avgPricePaid | currency}}</p>
+        <button class="btn"><img class="img-responsive" ng-src="{{x.imageSrc}}" ng-click="x.buy()"/>
+        </button>
+        <button class="btn btn-warning btn-block" ng-click="x.sell()">Sell 1 {{x.name}}</button>
+        </div>
       </div>
     </div>
   </div>
