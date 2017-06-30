@@ -19,12 +19,17 @@ crossorigin="anonymous">
 <body ng-app="myApp">
   <main ng-controller="ExchangeController as ec">
 
-  <h1>Ω Exchange</h1>
-  <h2>You have: {{ec.cash | currency}}</h2>
-  <h3>Change of:  {{ec.cash - 100 | currency}}</h3>
-  <h3>{{ec.roundsLeft}} rounds left</h3>
-  <button class="btn btn-primary middle" ng-show="ec.buttonShow" ng-click="ec.startGame()">Ω START</button>
   <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 head">
+
+          <h1>Ω Exchange</h1>
+          <h2>You have: {{ec.cash | currency}}</h2>
+          <h3>Change of:  {{ec.cash - 100 | currency}}</h3>
+          <h3>{{ec.roundsLeft}} rounds left</h3>
+          <button class="startButton" ng-show="ec.buttonShow" ng-click="ec.startGame()">Ω START</button>
+      </div>
+    </div>
     <div class="row">
       <div class="col-xs-6 col-sm-3 col-lg-2" ng-repeat="x in ec.objectArray">
         <div class="itemBox" ng-class="{true:'green', false:''}[x.sellNow]">
