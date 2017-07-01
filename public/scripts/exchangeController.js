@@ -9,7 +9,11 @@ function ExchangeController($interval) {
   const STARTPRICE = 5;
   const ROUNDTIME = 3000;
   const ROUNDS = 30;
-  vm.cash = 100;
+  const CASH = 100;
+  const MAX_PRICE = 9.99;
+  const MIN_PRICE = 0.5;
+
+  vm.cash = CASH;
   vm.objectArray = [];
   vm.roundsLeft = ROUNDS;
   vm.buttonShow = true;
@@ -24,7 +28,8 @@ function ExchangeController($interval) {
 
     constructor(name, src) {
       this.name = name;
-      this.price = STARTPRICE + Number(((Math.random() * (100) - 50) / 100).toFixed(2));
+      this.price = STARTPRICE + Math.floor(Math.random() * (100 - 50) / 100);
+      console.log(this.price);
       this.imageSrc = src;
       this.inventory = 0;
       this.pricesPaid = [];
@@ -34,9 +39,9 @@ function ExchangeController($interval) {
     priceChange() {
       $interval(() => {
         let change = Number(((Math.random() * (100) - 50) / 100).toFixed(2));
-        if ((this.price + change) < 0.5) {
+        if ((this.price + change) < MIN_PRICE) {
           this.price += Math.abs(change);
-        } else if ((this.price + change) > 9.99) {
+        } else if ((this.price + change) > MAX_PRICE) {
           this.price -= Math.abs(change);
         } else {
           this.price += change;
@@ -75,6 +80,9 @@ function ExchangeController($interval) {
       } else {
         this.inventory--;
         vm.cash += this.price;
+        if(this.inventory == 0){
+          this.pricesPaid = [];
+        }
       }
     } // end sell method
 
