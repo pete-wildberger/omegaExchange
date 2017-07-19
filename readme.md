@@ -1,4 +1,4 @@
-#Omega exchange#
+#Omega exchange
 
 A market exchange game!(to practice ES6 and Object Oriented Programming)
 

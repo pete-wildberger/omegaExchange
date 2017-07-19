@@ -12,6 +12,12 @@ function ExchangeController($interval) {
   const CASH = 100;
   const MAX_PRICE = 9.99;
   const MIN_PRICE = 0.5;
+  const HI_PRICE = 100;
+  const LO_PRICE = 50;
+  const HI_F_PRICE = 150;
+  const LO_F_PRICE = 75;
+  const PERISH = 10;
+
 
   vm.cash = CASH;
   vm.objectArray = [];
@@ -28,7 +34,7 @@ function ExchangeController($interval) {
 
     constructor(name, src) {
       this.name = name;
-      this.price = STARTPRICE + Math.floor(Math.random() * (100 - 50) / 100);
+      this.price = STARTPRICE + Math.floor(Math.random() * (HI_PRICE - LO_PRICE) / 100);
       console.log(this.price);
       this.imageSrc = src;
       this.inventory = 0;
@@ -39,7 +45,7 @@ function ExchangeController($interval) {
     priceChange() {
       $interval(() => {
         let change = Number(((Math.random() * (100) - 50) / 100).toFixed(2));
-        if ((this.price + change) < MIN_PRICE) {
+        if ((this.price + change) < MAX_PRICE) {
           this.price += Math.abs(change);
         } else if ((this.price + change) > MAX_PRICE) {
           this.price -= Math.abs(change);
@@ -91,21 +97,21 @@ function ExchangeController($interval) {
   class Fruit extends Item {
     constructor(name, src) {
       super(name, src);
-      this.perishCount = 10;
+      this.perishCount = PERISH;
     }
     priceChange() {
       $interval(() => {
         if (this.perishCount == 0) {
           this.inventory = 0;
-          this.perishCount = 10;
+          this.perishCount = PERISH;
         } else {
           this.perishCount--;
         }
 
-        let change = Number(((Math.random() * (150) - 75) / 100).toFixed(2));
+        let change = Number(((Math.random() * (HI_F_PRICE) - LO_F_PRICE) / 100).toFixed(2));
         if ((this.price + change) < 0.5) {
           this.price += Math.abs(change);
-        } else if ((this.price + change) > 9.99) {
+        } else if ((this.price + change) > MAX_PRICE) {
           this.price -= Math.abs(change);
         } else {
           this.price += change;
